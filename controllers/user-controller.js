@@ -68,4 +68,13 @@ const userController = {
     }
 }
 
+const userFriends = {
+    createFriend({body}, res) {
+
+    },
+    deleteFriend({params}, res) {
+
+    }
+}
+
 module.exports = userController;

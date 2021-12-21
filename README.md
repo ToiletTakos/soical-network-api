@@ -62,7 +62,7 @@ Use the following guidelines to set up your models and API routes:
 
 ### Models
 
-**User**
+<!-- **User**
 
 * `username`
     * String
@@ -135,13 +135,13 @@ Create a virtual called `reactionCount` that retrieves the length of the thought
 
 **Schema Settings**
 
-This will not be a model, but rather used as the `reaction` field's subdocument schema in the `Thought` model.
+This will not be a model, but rather used as the `reaction` field's subdocument schema in the `Thought` model. -->
 
 
 ### API Routes
 
 **`/api/users`**
-
+<!-- 
 * `GET` all users
 
 * `GET` a single user by its `_id` and populated thought and friend data
@@ -162,7 +162,7 @@ This will not be a model, but rather used as the `reaction` field's subdocument 
 
 **BONUS**: Remove a user's associated thoughts when deleted
 
----
+--- -->
 
 **`/api/users/:userId/friends/:friendId`**
 
@@ -174,7 +174,7 @@ This will not be a model, but rather used as the `reaction` field's subdocument 
 
 **`/api/thoughts`**
 
-* `GET` to get all thoughts
+<!-- * `GET` to get all thoughts
 
 * `GET` to get a single thought by its `_id`
 
@@ -193,7 +193,7 @@ This will not be a model, but rather used as the `reaction` field's subdocument 
 
 * `DELETE` to remove a thought by its `_id`
 
----
+--- -->
 
 **`/api/thoughts/:thoughtId/reactions`**
 
