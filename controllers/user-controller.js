@@ -5,8 +5,11 @@ const userController = {
     getAllUser(req, res) {
         User.find({})
         .populate({
-            path: 'friends'
+            path: 'friends',
+            select: '-__v'
         })
+        .select('-__v')
+        .sort({ _id: -1 })
         .then(dbUserData => res.json(dbUserData))
         .catch(err => {
             console.log(err);
@@ -18,8 +21,14 @@ const userController = {
     getUserById({params}, res) {
         User.findOne({ _id: params.id})
         .populate({
-            path: 'friends'
+            path: 'friends',
+            select: '-__v'
         })
+        .populate({
+            path: 'thoughts',
+            select:'-__v'
+        })
+        .select('-__v')
         .then(dbUserData => {
             // If no user is found, send 404
             if(!dbUserData) {
@@ -43,7 +52,7 @@ const userController = {
 
     //update user by their id
     updateUser({params, body}, res) {
-        User.findOneAndUpdate({ _id: params.id}, body, { new: true })
+        User.findOneAndUpdate({ _id: params.id}, body, { new: true, runValidators: true })
         .then(dbUserData => {
             if(!dbUserData) {
                 res.status(404).json({ message: 'No user found with this id!' });
@@ -65,16 +74,24 @@ const userController = {
             res.json(dbUserData);
         })
         .catch(err => res.status(400).json(err));
-    }
-}
-
-const userFriends = {
-    createFriend({body}, res) {
-
     },
-    deleteFriend({params}, res) {
 
+    addFriend({ params }, res) {
+        User.findByIdAndUpdate(params.userId,{
+            $addToSet:{friends: params.friendId}
+        }, {new: true})
+        .then(dbUserData => res.json(dbUserData))
+        .catch(err => res.json(err));
+    },
+
+    deleteFriend({ params }, res) {
+        User.findByIdAndUpdate(params.userId,{
+            $pull:{friends: params.friendId}
+        }, {new: true})
+        .then(dbUserData => res.json(dbUserData))
+        .catch(err => res.json(err));
     }
 }
+
 
 module.exports = userController;
