@@ -1,9 +1,10 @@
-const { Schema } = require('mongoose');
+const { Schema, Types } = require('mongoose');
 
 const ReactionSchema = new Schema(
     {
         reactionId: {
-
+            type: mongoose.ObjectId,
+            default: new mongoose.ObjectId
         },
         reactionBody: {
             type: String, 
@@ -19,6 +20,12 @@ const ReactionSchema = new Schema(
             default: Date.now,
             get: (createdAtVal) => dateFormat(createdAtVal)
         }
+    },
+    {
+        toJSON: {
+            getters: true,
+        },
+        id: false
     }
 )
 
